@@ -1,0 +1,48 @@
+<% provide(:title, 'All users') %>
+<h1>ユーザー覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <table class="table table-condensed table-hover" id="table-users">
+    <thead>
+      <tr>
+        <!--<div class="csv">-->
+        <!--  <!%= form_tag import_users_path, multipart: true do |f| %>-->
+        <!--    <!%= file_field_tag :file %>-->
+        <!--    <!%= submit_tag "CSV出力", class: "btn btn-primary" %>-->
+        <!--  <& end &>-->
+        </div>
+        <th>CSVインポート</th>
+      </tr>
+    </thead>
+    
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, user %></td>
+      </tr>
+      <% if current_user.admin? && !current_user?(user) %>
+        <tr>
+          <td>|
+            <%= link_to "削除", user, method: :delete,
+            data: { confirm: "削除してよろしいですか？" },
+            class: "btn btn-primary" %>
+          </td>
+        </tr>
+          <td>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4>
+                  <button type="button" data-toggle="collapse" data-target="#collapse<%= user.id %>" class="btn btn-lg btn-primary">編集</button>
+                </h4>
+              </div>
+              <div id="collapse<%= user.id %>" class="panel-collapse collapse">
+                <div class="panel-body">
+                  
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+     <% end %>   
+  </table>
+</div>
