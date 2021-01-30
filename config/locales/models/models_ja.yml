@@ -3,6 +3,7 @@ ja:
     models:
       user: ユーザー
       attendance: 勤怠
+      base: 拠点
     attributes:
         user:
           id: ID
@@ -11,6 +12,10 @@ ja:
           affiliation: 所属
           basic_time: 基本時間
           work_time: 勤務時間
+          designated_work_start_time: 指定勤務開始時間
+          designated_work_end_time: 指定勤務終了時間
+          employee_number: 社員番号
+          uid: カードID
           password: パスワード
           password_confirmation: パスワード再入力
           created_at: 作成日
@@ -21,3 +26,7 @@ ja:
           finished_at: 退勤時間
           note: 備考
           user: ユーザーID
+        base:
+          base_number: 拠点番号
+          base_name: 拠点名
+          information: 拠点情報

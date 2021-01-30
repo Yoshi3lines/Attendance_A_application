@@ -1,0 +1,61 @@
+<% provide(:title, 'Bases') %>
+<% provide(:class_text, 'base') %>
+<% provide(:button_text, '作成する') %>
+<h1> 拠点一覧 </h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <table class="table table-striped table-bordered table-condensed table-hover" id="table-bases">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th class="center">拠点番号</th>
+        <th class="center">拠点名</th>
+        <th class="center">勤怠種類</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% if @bases != nil %>
+        <% @bases.each do |base| %>
+        <tr>
+          <td>
+            <button type="button" data-toggle="collapse" data-target="#<%= base.base_id %>" class="btn btn-primary">修正</button>
+          </td>
+          <td>
+            <%= link_to "削除", '#',
+                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %>
+          </td>
+          <td class="center"><%= base.base_number %></td>
+          <td class="center"><%= base.base_name %></td>
+          <td class="center"><%= base.information %></td>
+        </tr>
+        <tr>
+          <td>
+            <div id="<%= base.base_id %>" class="collapse">
+              <div class="panel-body">
+                <%= render 'edit_form' %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+    
+  <tr>
+    <td>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button type="button" data-toggle="collapse" data-target="#add_base" class="btn btn-lg btn-primary">拠点情報追加</button>
+        </div>
+        <div id="add_base" class="collapse">
+          <div class="panel-body">
+            <%= render 'new_form' %>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+</div>
