@@ -13,7 +13,7 @@ class BasesController < ApplicationController
       flash[:success] = '拠点情報を作成しました。'  
       redirect_to bases_url
     else
-      flash[:danger] = '拠点情報の作成に失敗しました。'
+      flash[:danger] = "拠点情報の作成に失敗しました。" + @base.errors.full_messages.join("<br>")
       redirect_to bases_url
     end
   end
@@ -26,7 +26,7 @@ class BasesController < ApplicationController
       flash[:success] = "拠点情報を更新しました。"
       redirect_to bases_url
     else
-      flash[:danger] = '拠点情報の更新に失敗しました。'
+      flash[:danger] = "拠点情報の更新に失敗しました。" + @base.errors.full_messages.join("<br>")
       redirect_to bases_url
     end
   end

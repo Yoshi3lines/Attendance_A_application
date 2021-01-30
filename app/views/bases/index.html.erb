@@ -16,31 +16,29 @@
     </thead>
     
     <tbody>
-      <% if @bases != nil %>
         <% @bases.each do |base| %>
-        <tr>
-          <td>
-            <button type="button" data-toggle="collapse" data-target="#<%= base.base_id %>" class="btn btn-primary">修正</button>
-          </td>
-          <td>
-            <%= link_to "削除", '#',
-                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %>
-          </td>
-          <td class="center"><%= base.base_number %></td>
-          <td class="center"><%= base.base_name %></td>
-          <td class="center"><%= base.information %></td>
-        </tr>
-        <tr>
-          <td>
-            <div id="<%= base.base_id %>" class="collapse">
-              <div class="panel-body">
-                <%= render 'edit_form' %>
+          <tr>
+            <td>
+              <button type="button" data-toggle="collapse" data-target="#<%= base.base_number %>" class="btn btn-primary">修正</button>
+            </td>
+            <td>
+              <%= link_to "削除", base, method: :delete,
+                  data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %>
+            </td>
+            <td class="center"><%= base.base_number %></td>
+            <td class="center"><%= base.base_name %></td>
+            <td class="center"><%= base.information %></td>
+          </tr>
+          <tr>
+            <td>
+              <div id="<%= base.base_number %>" class="collapse">
+                <div class="panel-body">
+                  <%= render 'edit_form' %>
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+          </tr>
         <% end %>
-      <% end %>
     </tbody>
   </table>
     
