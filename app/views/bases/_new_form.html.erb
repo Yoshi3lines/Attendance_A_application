@@ -1,5 +1,5 @@
-<%= form_with(model: @base, local: true) do |f| %>
-  <!--<!%= render 'shared/error_messages', object: @base %>-->
+<%= form_with scope: :base, url: bases_path, local: true do |f| %>
+  <%= render 'shared/error_messages', object: base %>
 
   <%= f.label :base_number, class: "label-#{yield(:class_text)}" %>
   <%= f.number_field :base_number, class: "form-control" %>

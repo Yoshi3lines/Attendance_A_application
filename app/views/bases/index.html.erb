@@ -33,7 +33,11 @@
             <td>
               <div id="<%= base.base_number %>" class="collapse">
                 <div class="panel-body">
-                  <%= render 'edit_form' %>
+                  <% if @base.errors.any? && @base.id == base.id %>
+                    <%= render 'edit_form', base: @base %>
+                  <% else %>
+                    <%= render 'edit_form', base: base %>
+                  <% end %>
                 </div>
               </div>
             </td>
@@ -50,7 +54,7 @@
         </div>
         <div id="add_base" class="collapse">
           <div class="panel-body">
-            <%= render 'new_form' %>
+            <%= render 'new_form', base: @base %>
           </div>
         </div>
       </div>
