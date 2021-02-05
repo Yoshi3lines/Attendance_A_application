@@ -10,6 +10,25 @@ class UsersController < ApplicationController
   end
   
   def import
+    if params[:file].blank?
+      flash[:danger] = "ファイルを選択してください。"
+      redirect_to users_url
+    elsif
+      File.extname(params[:file].original_filename) != ".csv"
+      flash[:danger] = "csvファイル以外は出力できません。"
+      redirect_to users_url
+    else
+      User.import(params[:file])
+      flash[:success] = "インポートが完了しました。"
+      redirect_to users_url
+    end
+    
+  rescue ActiveRecord::RecordInvalid
+    flash[:danger] = "不正なファイルのため、インポートに失敗しました。"
+    redirect_to users_url
+  rescue ActiveRecord::RecordNotUnique
+    flash[:danger] = "すでにインポート済みです。"
+    redirect_to users_url
   end
 
   def show
