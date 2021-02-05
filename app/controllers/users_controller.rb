@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info,]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :working_employees]
   before_action :set_one_month, only: :show
   
   def index
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def working employees
+  def working_employees
     # ユーザーモデルから勤怠達を取得
     @users = User.all.includes(:attendances)
   end
@@ -69,7 +69,8 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation,
+                                   :employee_number, :uid,)
     end
     
     def basic_info_params
