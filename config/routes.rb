@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   resources :users do
     collection { post :import }
     member do
-      # 勤怠編集ページ
+      # 基本情報の修正ページ
       get 'edit_basic_info'
       patch 'update_basic_info'
+      # ユーザー情報変更フォーム
+      patch 'update_index'
+      # 勤怠変更ページ
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
     end
