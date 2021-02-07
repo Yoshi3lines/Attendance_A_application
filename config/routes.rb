@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       patch 'attendances/update_one_month'
     end
     collection do
+      # 出社中社員ページ
       get 'working_employees'
     end
     resources :attendances, only: :update
