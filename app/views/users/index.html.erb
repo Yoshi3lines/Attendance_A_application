@@ -1,11 +1,12 @@
 <% provide(:title, 'All users') %>
+<% provide(:class_text, 'signup') %>
+<% provide(:button_text, '新規作成' ) %>
 <h1>ユーザー覧</h1>
 
 <div class="col-md-10 col-md-offset-1">
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
-        <th>CSVインポート</th>
         <%= form_tag import_users_path, multipart: true do %>
           <%= file_field_tag :file %>
           <%= submit_tag "インポート" %>
