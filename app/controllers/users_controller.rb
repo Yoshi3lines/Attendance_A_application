@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_index]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :update_index]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :working_employees, :index]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :working_employees, :index,]
   before_action :set_one_month, only: :show
   
   def index
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       redirect_to users_url
     else
       flash[:danger] = "更新に失敗しました。"
-      render :index
+      redirect_to users_url
     end
   end
 
