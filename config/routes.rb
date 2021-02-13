@@ -25,6 +25,12 @@ Rails.application.routes.draw do
       # 出社中社員ページ
       get 'working_employees'
     end
-    resources :attendances, only: :update
+    resources :attendances, only: [:update] do
+      member do
+        # 残業申請モーダルウィンドウ
+      get 'edit_overtime_request'
+      patch 'update_overtime_request'
+      end
+    end
   end
 end

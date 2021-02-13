@@ -43,6 +43,12 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  def edit_overtime_request
+  end
+  
+  def update_overtime_request
+  end
+  
   private
     
     def attendances_params
