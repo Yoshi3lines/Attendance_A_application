@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only: [:edit_one_month, :update_one_month]
+  before_action :set_user, only: [:edit_one_month, :update_one_month,]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: :edit_one_month
@@ -44,15 +44,29 @@ class AttendancesController < ApplicationController
   end
   
   def edit_overtime_request
+    @user = User.find(params[:id])
+    @attendance = Attendance.find(params[:id])
+    @superior = User.where(superior: true).where.not(id: current_user.id)
   end
   
   def update_overtime_request
+    @user = User.find(params[:id])
+    @attendance = Attendance.find(params[:id])
+    if @attendance.update_attributes(overtime_params)
+      flash[:success] = "残業申請を受け付けました"
+      redirect_to user_url(@user)
+    end
   end
   
   private
-    
+    # 勤怠編集
     def attendances_params
       params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+    end
+    
+    # 残業申請モーダル情報
+    def overtime_params
+      params.require(:attendance).permit(:overtime_finished_at, :tomorrow, :overtime_work, :indicater_check)
     end
     
     # beforeフィルター
