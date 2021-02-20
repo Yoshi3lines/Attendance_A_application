@@ -30,6 +30,20 @@ class ApplicationController < ActionController::Base
     redirect_to root_url unless current_user.admin?
   end
   
+  def admin_not
+    if current_user.admin?
+      flash[:danger] = "ページ遷移の権限がありません。"
+      redirect_to root_url
+    end
+  end
+  
+  def correct_not
+    unless current_user == @user
+      flash[:danger] = "他者のページは閲覧できません。"
+      redirect_to root_url
+    end
+  end
+  
   # ページを出力する前に１カ月分のデータの存在を確認とセットを実行する
   def set_one_month
     @first_day = params[:date].nil? ?

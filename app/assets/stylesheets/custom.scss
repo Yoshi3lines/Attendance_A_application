@@ -91,3 +91,52 @@ p {
     color: $state-danger-text;
   }
 }
+
+// 残業申請モーダルウィンドウ
+
+// モーダルの位置調整
+.modal-dialog {
+  padding-top: 10%;
+}
+
+// 残業申請モーダル
+.overtime_request {
+ th {
+   text-align: center;
+ }
+ td {
+   text-align: center;
+ }
+}
+
+.line tr:nth-child(odd) td{
+  background: #f8f8f8;
+  text-align: center;
+}
+
+.modal-content {
+  td{
+    text-align: center;
+  }
+}
+
+// 印のレイアウト　
+.maru {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.size_small {
+  width: 18px;
+  height: 18px;
+}
+.letter3 {
+  font-size: 0.7em;
+  line-height: 1.5em;
+}
+.black {
+  color: black;
+  border: 1px solid black;
+}
+

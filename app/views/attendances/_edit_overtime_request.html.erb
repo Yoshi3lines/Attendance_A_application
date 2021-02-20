@@ -24,7 +24,7 @@
           
           <tbody class="line">
             <%
-            class_css =
+            css_class =
             case $days_of_the_week[@attendance.worked_on.wday]
             when '土'
               'text-primary'
@@ -33,8 +33,8 @@
             end
             %>
             <td><%= l(@attendance.worked_on, format: :short) %></td>
-            <td class="<%= class_css %>"><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
-            <td><%= f.time_select :overtime_finished_at, {include_blank: true}, {class: "form-control bootstrap-date-only-width", required: true } %></td>
+            <td class="<%= css_class %>"><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
+            <td><%= f.time_select :overtime_finished_at, {include_blank: true}, {class: "form-control bootstrap-date-only-width",required: true } %></td>
             <td><%= f.check_box :tomorrow, id: "tomorrow" %></td>
             <td><%= f.text_field :overtime_work, {class: "form-control", required: true} %></td>
             <td><%= f.collection_select(:indicater_check, @superior, :name, :name, {prompt: "上長を選択してください"}, {class:"form-control input-sm", required: true}) %></td>
