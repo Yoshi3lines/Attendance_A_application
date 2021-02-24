@@ -95,6 +95,9 @@ class UsersController < ApplicationController
     @users = User.all.includes(:attendances)
   end
   
+  def verifacation
+  end
+  
   private
   
     def user_params

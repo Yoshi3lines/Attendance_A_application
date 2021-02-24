@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       # 勤怠変更ページ
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
+      # 確認用showページ
+      get 'verifacation'
     end
     collection do
       # 出社中社員ページ
