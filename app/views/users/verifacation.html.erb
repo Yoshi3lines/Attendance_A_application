@@ -3,7 +3,7 @@
   <table class="table table-bordered table-condensed user-table">
     <tr>
       <td>
-        <div class="btn-user-show">
+        <div class="btn-users-show">
           <%= l(@first_day, format: :middle) %>時間管理表
         </div>
       </td>
@@ -18,9 +18,20 @@
       <td>名前：<%= @user.name %></td>
       <td>コード：<%= @user.employee_number %></td>
       <td></td>
-      <td>出勤日数：<%= @worked_sum %>日</td>
+      <td>出勤日数：日</td>
       <td>締め<%= l(@last_day, format: :short) %></td>
     </tr>
+  </table>
+</div>
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
   </table>
 </div>
 

@@ -5,6 +5,6 @@ class AddOvertimenoticeToAttendances < ActiveRecord::Migration[5.1]
     # 変更
     add_column :attendances, :change, :boolean, default: false
     # 確認
-    add_column :attendances, :verification, :boolean, default: false
+    add_column :attendances, :verifacation, :boolean, default: false
   end
 end

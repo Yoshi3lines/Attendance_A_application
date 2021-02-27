@@ -7,6 +7,12 @@ class AttendancesController < ApplicationController
   before_action :correct_not, only: [:show, :edit_one_month]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
+  
+  # 残業申請お知らせモーダル　
+  def edit_overtime_notice
+    @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply: "申請中"})
+    @attendances = Attendance.where.not(overtime_finished_at: nil).order("worked_on ASC")
+  end
 
   def update
     @user = User.find(params[:user_id])
