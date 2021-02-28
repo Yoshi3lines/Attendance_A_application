@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20210218210708) do
     t.string "indicater_check_anser"
     t.integer "indicater_reply"
     t.boolean "change", default: false
-    t.boolean "verification", default: false
+    t.boolean "verifacation", default: false
     t.string "indicater_check_edit"
     t.integer "indicater_reply_edit"
     t.boolean "tomorrow_edit", default: false
@@ -64,8 +64,8 @@ ActiveRecord::Schema.define(version: 20210218210708) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "affiliation"
-    t.datetime "basic_time", default: "2021-02-26 23:00:00"
-    t.datetime "work_time", default: "2021-02-26 22:30:00"
+    t.datetime "basic_time", default: "2021-02-27 23:00:00"
+    t.datetime "work_time", default: "2021-02-27 22:30:00"
     t.time "designated_work_start_time", default: "2000-01-01 00:00:00"
     t.time "designated_work_end_time", default: "2000-01-01 09:00:00"
     t.string "employee_number"

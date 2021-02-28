@@ -7,12 +7,6 @@ class AttendancesController < ApplicationController
   before_action :correct_not, only: [:show, :edit_one_month]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
-  
-  # 残業申請お知らせモーダル　
-  def edit_overtime_notice
-    @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply: "申請中"})
-    @attendances = Attendance.where.not(overtime_finished_at: nil).order("worked_on ASC")
-  end
 
   def update
     @user = User.find(params[:user_id])
@@ -51,6 +45,7 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
+  # 残業申請モーダル
   def edit_overtime_request
     @user = User.find(params[:id])
     @attendance = Attendance.find(params[:id])
@@ -66,16 +61,32 @@ class AttendancesController < ApplicationController
     end
   end
   
+  # 残業申請お知らせモーダル　
+  def edit_overtime_notice
+    @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply: "申請中"})
+    @attendances = Attendance.where.not(overtime_finished_at: nil).order("worked_on ASC")
+  end
+  
+  
   private
-    # 勤怠編集
+    # 勤怠編集、元の状態はstarted_atとfinished_atとnoteのみで、あとは追加項目
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+      params.require(:user).permit(attendances: [:worked_on, :started_at, :finished_at, :started_edit_at, :finished_edit_at, :tomorrow_edit, :note, :indicater_check_edit, :indicater_reply_edit])[:attendances]
     end
+    
     
     # 残業申請モーダル情報
     def overtime_params
-      params.require(:attendance).permit(:overtime_finished_at, :tomorrow, :overtime_work, :indicater_check)
+      params.require(:attendance).permit(:overtime_finished_at, :tomorrow, :overtime_work, :indicater_check, :indicater_reply)
     end
+    
+    # 残業申請お知らせモーダル
+    def overtime_notice_params
+      # attendancesテーブルの（指示者確認、変更）
+      params.require(:user).permit(attendances: [:overtime_work, :indicater_reply, :change, :indicater_check, :overtime_finished_at, :indicater_check_anser])[:attendances]
+    end
+    
+    # 1か月の承認モーダルのparamsは未設定
     
     # beforeフィルター
     

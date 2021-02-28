@@ -43,6 +43,12 @@ class UsersController < ApplicationController
 
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @overtime = Attendance.where(indicater_reply: "申請中", indicater_check: @user.name).count
+    @change = Attendance.where(indicater_reply_edit: "申請中", indicater_check_edit: @user.name).count
+    @month = Attendance.where(indicater_reply_month: "申請中", indicater_check_month: @user.name).count
+    @superior = User.where(superior: true).where.not(id: current_user.id)
+    @attendance = @user.attendances.find_by(worked_on: @first_day)
+    # csv出力は未定義
   end
 
   def new
@@ -107,12 +113,16 @@ class UsersController < ApplicationController
   
   private
   
+    # ユーザー情報更新
     def user_params
       params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation,
                                    :employee_number, :uid, :basic_time, :designated_work_start_time, :designated_work_end_time)
     end
     
+    # 基本情報更新
     def basic_info_params
       params.require(:user).permit(:affiliation, :basic_time, :work_time)
     end
+    
+    
 end

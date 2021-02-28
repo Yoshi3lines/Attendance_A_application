@@ -8,10 +8,10 @@
         <%= link_to "→", user_path(date: @first_day.next_month), class: "btn btn-primary btn-set-month" %>  
       </td>
       <td>
-        指定勤務開始時間</br>
-        指定勤務終了時間
+        指定勤務開始時間：<%= format_basic_info(@user.designated_work_start_time) %></br>
+        指定勤務終了時間：<%= format_basic_info(@user.designated_work_end_time) %>
       </td>
-      <td colspan="3">基本時間<%= format_basic_info(@user.basic_time) %></td>
+      <td colspan="3">基本時間：<%= format_basic_info(@user.basic_time) %></td>
       <td>初日：<%= l(@first_day, format: :short) %></td>
     </tr>
     
@@ -26,8 +26,38 @@
   </table>
 </div>
 
+<div class = "notice-group">
+  <% if current_user.superior? %>
+    
+    <% if @month >= 1%>
+      <div class = "red">
+        <p><%= link_to "【所属長承認申請のお知らせ　】", '#' %></p>
+      </div>
+    <% else %>
+      <p class = "notice">【所属長承認申請のお知らせ】</p>
+    <% end %>
+    
+    <% if @change >= 1 %>
+      <div class = "red">
+        <p><%= link_to "【勤怠変更のお知らせ】", '#' %></p>
+      </div>
+    <% else %>
+      <p class = "notice">【勤怠変更のお知らせ】</p>
+    <% end %>
+    
+    <% if @overtime >= 1 %>
+      <p><%= link_to "【残業申請のお知らせ】", '#' %></p>
+    <% else %>
+      <p class = "notice">【残業申請のお知らせ】</p>
+    <% end %>
+    
+  <% end %>
+</div>
+
 <div class="btn-users-show">
   <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary" %>
+  <%= link_to "CSV出力", '#', class: "btn btn-primary" %>
+  <%= link_to "勤怠修正ログ（承認済み）", '#', class: "btn btn-primary" %>
 </div>
 
 <div>
@@ -113,9 +143,8 @@
         <th colspan="5">総合勤務時間</th>
         <th></th>
         <th colspan="5">累計在社時間</th>
-        <th rowspan="2" colspan="3">
-          【所属長承認】</br>
-          未承認
+        <th colspan="3">
+          【所属長承認】
         </th>
       </tr>
       <tr>
@@ -123,6 +152,9 @@
         <td colspan="5"><%= format_basic_info(@user.basic_time).to_f * @worked_sum %></td>
         <td></td>
         <td colspan="5"><%= format("%.2f", @total_working_times.to_f) %></td>
+        <td colspan="3">
+          <!--form_with実装予定-->
+        </td>
       </tr>
     </tfoot>
   </table>
@@ -130,3 +162,4 @@
 
 <!--モーダルウインドウ表示-->
 <div id= "edit-overtime-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id= "edit-overtime-notice" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

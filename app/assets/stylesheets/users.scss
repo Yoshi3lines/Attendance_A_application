@@ -4,6 +4,18 @@
   text-align: center;
 }
 
+// 上長お知らせ
+.notice-group {
+  margin-bottom: 20px;
+  p {
+    margin-bottom: 0px;
+  }
+}
+
+.notice {
+  color: red;
+}
+
 /* ユーザー情報下ボタン */
 .btn-users-show {
   margin-top: -10px;
