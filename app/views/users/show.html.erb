@@ -46,7 +46,7 @@
     <% end %>
     
     <% if @overtime >= 1 %>
-      <p><%= link_to "【残業申請のお知らせ】", '#' %></p>
+      <p><%= link_to "【残業申請のお知らせ】", edit_overtime_notice_user_attendance_path(@user, @overtime), remote: true, class: "notice" %><span class = "red-box"><%= "#{@overtime}件の通知があります" %></span></p>
     <% else %>
       <p class = "notice">【残業申請のお知らせ】</p>
     <% end %>
@@ -127,12 +127,19 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <% if day.indicater_reply == "承認" %>
+            <td><%= l(day.overtime_finished_at, format: :hour_only) if day.overtime_finished_at.present? %></td>
+            <td><%= l(day.overtime_finished_at, format: :minutes_only) if day.overtime_finished_at.present? %></td>
+            <td>1</td>
+            <td><%= day.overtime_work %></td>
+          <% else %>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% end %>
+          <td>3</td>
+          <td>4</td>
         </tr>
       <% end %>
 </tbody>

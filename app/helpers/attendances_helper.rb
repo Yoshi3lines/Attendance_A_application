@@ -14,4 +14,14 @@ module AttendancesHelper
   def working_times(start, finish)
     format("%.2f", (((finish - start) / 60) / 60.0))
   end
+  
+  # 時間外勤務
+  def overtime_worked_on(finish, end_time, tomorrow)
+    if tomorrow == true
+      # finishとend_timeの'時'と'分'をそれぞれ計算し、差分を合わせるために、分割を60で割る
+      format("%.2f", (((finish.hour - end_time.hour) + ((finish.min - end_time.min) / 60.0) + 24)))
+    else
+      format("%.2f", (((finish.hour - end_time.hour) + ((finish.min - end_time.min) / 60.0))))
+    end
+  end
 end
