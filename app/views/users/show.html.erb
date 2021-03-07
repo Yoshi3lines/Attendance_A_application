@@ -138,8 +138,26 @@
             <td></td>
             <td></td>
           <% end %>
-          <td>3</td>
-          <td>4</td>
+          <td>
+          <!--未実装-->
+          <!--  <#%= if day.indicater_check_edit.present? %>-->
+          <!--    <#%= "#{day.indicater_check_edit}に勤怠変更#{day.indicater_reply_edit}" %>-->
+          <!--  <#% elsif day.indicater_check_edit == " 承認" %>-->
+          <!--    <#%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>-->
+          <!--  <#% elsif day.indicater_reply_edit == "否認" %>-->
+          <!--    <#%= "勤怠変更申請が#{indicater_reply_edit}されました" %>-->
+          <!--  <#% end %>-->
+          <!--ここまで-->
+          </td>
+          <td>
+            <% if day.indicater_check.present? %>
+              <%= "#{day.indicater_check}に残業#{day.indicater_reply}" %>
+            <% elsif day.indicater_reply == "承認" %>
+              <%= "残業申請が#{day.indicater_reply}されました" %>
+            <% elsif day.indicater_reply == "否認" %>
+              <%= "残業申請が#{day.indicater_reply}されました" %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
 </tbody>
