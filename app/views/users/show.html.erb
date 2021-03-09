@@ -39,7 +39,10 @@
     
     <% if @change >= 1 %>
       <div class = "red">
-        <p><%= link_to "【勤怠変更のお知らせ】", '#' %></p>
+        <p>
+          <%= link_to "【勤怠変更のお知らせ】", edit_one_month_notice_user_attendance_path(@user, @change), remote: true, class: "notice" %>
+          <span class="red-box"><%= "#{@change}件の通知があります" %></span>
+        </p>
       </div>
     <% else %>
       <p class = "notice">【勤怠変更のお知らせ】</p>
@@ -188,3 +191,4 @@
 <!--モーダルウインドウ表示-->
 <div id= "edit-overtime-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id= "edit-overtime-notice" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id= "edit-one-month-notice" class="modal fade" tabindex="1" role="dialog" aria-hidden="true"></div>

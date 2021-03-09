@@ -1,7 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :set_user, only: [:edit_one_month, :update_one_month, :edit_overtime_notice, :edit_one_month_notice]
   before_action :logged_in_user, only: [:update, :edit_one_month]
-  before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
+  before_action :admin_user, only: [:index, :destroy, :edit_basic_info]
   before_action :set_one_month, only: :edit_one_month
   before_action :admin_not
   before_action :correct_not, only: [:show, :edit_one_month]
@@ -30,17 +30,18 @@ class AttendancesController < ApplicationController
   end
   
   
-  # ここからは勤怠変更申請
+  
+  # ここからは勤怠変更申請に関する処理
   
   # 勤怠変更申請
   def edit_one_month
     @attendance = Attendance.find(params[:id])
-    @superior = User.where(sperior: true).where.not( id: current_user.id)
+    @superior = User.where(superior: true).where.not( id: current_user.id)
   end
   
   # 勤怠変更申請お知らせモーダル
   def edit_one_month_notice
-    @users = User.joins(:attendances).group("user_id").where(attendances: {indicater_reply_edit: "申請中"})
+    @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_edit: "申請中"})
     @attendances = Attendance.where.not(started_edit_at: nil, finished_edit_at: nil, note: nil, indicater_reply_edit: nil).order("worked_on ASC")
   end
   
@@ -73,7 +74,7 @@ class AttendancesController < ApplicationController
               return
             end
             c1 += 1
-            attendance.update_attributes!(item)
+            @attendance.update_attributes!(item)
           end
       end
       if c1 > 0
@@ -139,7 +140,7 @@ class AttendancesController < ApplicationController
               item[:note] = nil
               item[:indicater_check_edit] = nil
               e3 += 1
-              attendance.indicater_check_anser = "勤怠変更申請を否認しました"
+              attendance.indicater_check_edit_anser = "勤怠変更申請を否認しました"
             end
             attendance.update_attributes!(item)
           end
@@ -149,6 +150,9 @@ class AttendancesController < ApplicationController
           return
         end
       end
+      flash[:success] = "【勤怠変更申請】  #{e1}件なし、 #{e2}件承認、 #{e3}件を否認しました"
+      redirect_to user_url(params[:user_id])
+      return
     end
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "無効なデータがあった為、更新をキャンセルしました"
@@ -156,7 +160,8 @@ class AttendancesController < ApplicationController
   end
   
    
-  # ここから通常の残業申請
+   
+  # ここから通常の残業申請の処理
   
   # 残業申請モーダル
   def edit_overtime_request
@@ -205,6 +210,7 @@ class AttendancesController < ApplicationController
               item[:overtime_finished_at] = nil
               item[:tomorrow] = nil
               item[:overtime_work] = nil
+              item[:indicater_check] = nil
               item[:indicater_check] = nil
               o3 += 1
               attendance.indicater_check_anser = "残業申請を否認しました"
