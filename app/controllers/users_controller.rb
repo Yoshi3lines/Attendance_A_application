@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :working_employees, :index,]
   before_action :set_one_month, only: :show
+  
+  require 'csv'
 
   def index
     @users = User.all
@@ -11,7 +13,7 @@ class UsersController < ApplicationController
   
   def import
     if params[:file].blank?
-      flash[:danger] = "ファイルを選択してください。"
+      flash[:danger] = "CSVファイルを選択してください。"
       redirect_to users_url
     elsif
       File.extname(params[:file].original_filename) != ".csv"
@@ -48,7 +50,12 @@ class UsersController < ApplicationController
     @month = Attendance.where(indicater_reply_month: "申請中", indicater_check_month: @user.name).count
     @superior = User.where(superior: true).where.not(id: current_user.id)
     @attendance = @user.attendances.find_by(worked_on: @first_day)
-    # csv出力は未定義
+    # csv出力
+    respond_to do |format|
+      format.html
+      filename = @user.name + "：" + l(@first_day, format: :middle) + "分" + " " + "勤怠"
+      format.csv { send_data render_to_string, type: 'text/csv; charset=shift_jis', filename: "#{filename}.csv" }
+    end
   end
 
   def new

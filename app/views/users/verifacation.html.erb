@@ -45,7 +45,10 @@
         <th colspan="2">終了予定時間</th>
         <th rowspan="2">時間外時間</th>
         <th rowspan="2">業務処理内容</th>
-        <th colspan="2">指示者確認 印</th>
+        <th colspan="2">
+          指示者確認<div class="maru size_small black">
+            <div class="letter3">印</div>
+        </th>
       </tr>
       <tr>
         <th>時</th>
@@ -89,12 +92,36 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><%= l(day.overtime_finished_at, format: :hour_only) if day.overtime_finished_at.present? %></td>
+          <td><%= l(day.overtime_finished_at, format: :minutes_only) if day.overtime_finished_at.present? %></td>
+          <% if day.overtime_finished_at.present? %>
+            <td><%= overtime_worked_on(day.overtime_finished_at, @user.designated_work_end_time, day.tomorrow) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= day.overtime_work %></td>
+          <td>
+            <% if day.indicater_check.present? %>
+              <%= "#{day.indicater_check}に残業#{day.indicater_reply}" %>
+            <% else %>
+              <% if day.indicater_reply == "承認" %>
+                <%= indicater_check_anser = "残業申請が承認されました" %>
+              <% elsif day.indicater_reply == "否認" %>
+                <%= indicater_check_anser = "残業申請が否認されました" %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.indicater_check_edit.present? %>
+              <%= "#{day.indicater_check_edit}に勤怠変更#{day.indicater_reply_edit}" %>
+            <% else %>
+              <% if day.indicater_reply_edit == "承認" %>
+                <%= indicater_check_edit_anser = "勤怠変更申請が承認されました" %>
+              <% elsif day.indicater_reply_edit == "否認" %>
+                <%= indicater_check_edit_anser = "勤怠変更申請が否認されました" %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
 </tbody>
