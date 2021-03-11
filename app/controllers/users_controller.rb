@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :working_employees, :index,]
   before_action :set_one_month, only: :show
   
-  require 'csv'
-
+  
   def index
     @users = User.all
   end
