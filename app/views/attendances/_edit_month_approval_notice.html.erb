@@ -24,7 +24,7 @@
                   <%= f.fields_for "attendances[]", day do |attendance| %>
                     <% if day.user_id == user.id && day.indicater_reply_month == "申請中" && current_user.name == day.indicater_check_month %>
                       <tbody class="line">
-                        <td><%= l(day.month_approval, format: :short) %>月</td>
+                        <td><%= l(day.month_approval, format: :month_only) %>月</td>
                         <td><%= attendance.select :indicater_reply_month, Attendance.indicater_reply_months.keys,{prompt: "選択して下さい"}, {class: "form-control input-sm", required: true} %></td>
                         <td><%= attendance.check_box :change_month %></td>
                         <td><%= link_to "確認", verifacation_user_path(user.id, worked_on: day.worked_on), class: "btn btn-primary", target: :_blank %></td>

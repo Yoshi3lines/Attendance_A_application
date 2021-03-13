@@ -56,10 +56,18 @@
                       %>
                       <td><%= l(day.worked_on, format: :short) %></td>
                       <td class="<%= css_class %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
-                      <td><%= l(day.started_at, format: :hour_only) %></td>
-                      <td><%= l(day.started_at, format: :minutes_only) %></td>
-                      <td><%= l(day.finished_at, format: :hour_only) %></td>
-                      <td><%= l(day.finished_at, format: :minutes_only) %></td>
+                      <!--started_atとfinished_atの値が無いとモーダルが表示されない-->
+                      <% if day.started_at.nil? %>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      <% else %>
+                        <td><%= l(day.started_at, format: :hour_only) %></td>
+                        <td><%= l(day.started_at, format: :minutes_only) %></td>
+                        <td><%= l(day.finished_at, format: :hour_only) %></td>
+                        <td><%= l(day.finished_at, format: :minutes_only) %></td>
+                      <% end %>
                       <td><%= l(day.started_edit_at, format: :hour_only) %></td>
                       <td><%= l(day.started_edit_at, format: :minutes_only) %></td>
                       <td><%= l(day.finished_edit_at, format: :hour_only) %></td>

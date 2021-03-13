@@ -143,13 +143,13 @@
           <% end %>
           <td>
           <!--未実装-->
-          <!--  <#%= if day.indicater_check_edit.present? %>-->
-          <!--    <#%= "#{day.indicater_check_edit}に勤怠変更#{day.indicater_reply_edit}" %>-->
-          <!--  <#% elsif day.indicater_check_edit == " 承認" %>-->
-          <!--    <#%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>-->
-          <!--  <#% elsif day.indicater_reply_edit == "否認" %>-->
-          <!--    <#%= "勤怠変更申請が#{indicater_reply_edit}されました" %>-->
-          <!--  <#% end %>-->
+            <% if day.indicater_check_edit.present? %>
+              <%= "#{day.indicater_check}に勤怠変更#{day.indicater_reply_edit}" %>
+            <% elsif day.indicater_check_edit == " 承認" %>
+              <%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>
+            <% elsif day.indicater_reply_edit == "否認" %>
+              <%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>
+            <% end %>
           <!--ここまで-->
           </td>
           <td>
@@ -192,3 +192,4 @@
 <div id= "edit-overtime-request" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id= "edit-overtime-notice" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id= "edit-one-month-notice" class="modal fade" tabindex="1" role="dialog" aria-hidden="true"></div>
+<div id= "edit_month-approval-notice" class="modal fade" tabindex="1" role="dialog" aria-hidden="true"></div>

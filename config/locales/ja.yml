@@ -42,6 +42,9 @@ ja:
       long: "%Y年%m月%d日(%a)"
       middle: "%Y年%m月"
       short: "%-m/%-d"
+      month_only: "%-m"
+      hour_only: "%H時"
+      minutes_only: "%M分"
     month_names:
     - 
     - 1月
@@ -207,4 +210,12 @@ ja:
       time: "%H：%M"
       hour_only: "%H時"
       minutes_only: "%M分"
-    pm: 午後
+    pm: 
+  enums: # enum型に対する日本語定義であることを明示
+  attendance: # モデルを指定
+    indicater_reply:
+      not: なし
+      apporoval: 承認
+      denial: 否認
+      applying: 申請中
+      
