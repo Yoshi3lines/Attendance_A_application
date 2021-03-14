@@ -187,7 +187,6 @@
         <td></td>
         <td colspan="5"><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="3">
-          <!--form_with実装予定-->
           <%= form_with(model: @user, url: attendances_update_month_approval_user_path(@user), method: :patch, local: true ) do |f| %>
             <%= f.hidden_field :indicater_reply_month, :value => "申請中" %>
             <%= f.hidden_field :month_approval, :value => @first_day %>

@@ -162,6 +162,7 @@ class AttendancesController < ApplicationController
   
   # ここからは勤怠の1ヶ月分の勤怠承認に関する処理
   
+  # 勤怠承認申請
   def update_month_approval
     @attendance = @user.attendances.find_by(worked_on: params[:user][:month_approval]) #特定したユーザーの現在の月の取得
     if month_approval_params[:indicater_check_month].present?
@@ -173,13 +174,13 @@ class AttendancesController < ApplicationController
     redirect_to user_url(@user)
   end
   
+  # 1ヶ月分の勤怠承認モーダル
   def edit_month_approval_notice
       @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_month: "申請中"})
       @attendances = Attendance.where.not(month_approval: nil, indicater_reply_month: nil).order("month_approval ASC")
   end
   
   # 1ヶ月分の勤怠承認更新
-  
   def update_month_approval_notice
     ActiveRecord::Base.transaction do
       a1 = 0
@@ -209,12 +210,12 @@ class AttendancesController < ApplicationController
           end
         end
       end
-      flash[:success] = "【1ヶ月の承認申請】　#{a1}なし、#{a2}件承認、#{a3}件否認しました"
+      flash[:success] = "【1ヶ月の承認申請】　#{a1}件なし、#{a2}件承認、#{a3}件否認しました"
       redirect_to user_url(params[:user_id])
       return
     end
   rescue ActiveRecord::RecordInvalid
-    flash[:danger] = "無効なデータがあった為、更新をキャンセルしました"
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました"
     redirect_to edit_month_approval_notice_user_attendance_url(@user, item)
   end
   
