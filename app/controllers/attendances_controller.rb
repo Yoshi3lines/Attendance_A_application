@@ -160,7 +160,7 @@ class AttendancesController < ApplicationController
   end
   
   
-  # ここからは勤怠の1ヶ月勤怠承認に関する処理
+  # ここからは勤怠の1ヶ月分の勤怠承認に関する処理
   
   def update_month_approval
     @attendance = @user.attendances.find_by(worked_on: params[:user][:month_approval]) #特定したユーザーの現在の月の取得
@@ -178,7 +178,7 @@ class AttendancesController < ApplicationController
       @attendances = Attendance.where.not(month_approval: nil, indicater_reply_month: nil).order("month_approval ASC")
   end
   
-  # 1ヶ月勤怠承認更新
+  # 1ヶ月分の勤怠承認更新
   
   def update_month_approval_notice
     ActiveRecord::Base.transaction do

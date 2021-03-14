@@ -43,8 +43,6 @@ ja:
       middle: "%Y年%m月"
       short: "%-m/%-d"
       month_only: "%-m"
-      hour_only: "%H時"
-      minutes_only: "%M分"
     month_names:
     - 
     - 1月
