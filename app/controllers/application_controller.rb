@@ -25,6 +25,15 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url) unless current_user?(@user)
   end
   
+  # ログ専用のアクセスしたユーザーが現在ログインしているユーザーなのかを確認する
+  def correct_user_a
+    @user = User.find(params[:user_id])
+    unless current_user?(@user)
+      flash[:danger] = "他者のページは閲覧できません"
+      redirect_to root_url
+    end
+  end
+  
   # システム管理権限所有のユーザーか判定
   def admin_user
     redirect_to root_url unless current_user.admin?

@@ -5,6 +5,8 @@ class AttendancesController < ApplicationController
   before_action :set_one_month, only: :edit_one_month
   before_action :admin_not
   before_action :correct_not, only: [:show, :edit_one_month]
+  before_action :correct_user_a, only: [:log]
+  
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   
@@ -290,6 +292,20 @@ class AttendancesController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "無効なデータ入力があった為、更新をキャンセルしました"
     redirect_to edit_overtime_notice_user_attendance_url(@user, item)
+  end
+  
+  
+  # ここからはlogに関するの処理
+  def log
+    @user = User.find(params[:user_id])
+    if params["worked_on(1i)"].present? && params["worked_on(2i)"].present? # もし受け取った値worked_on(1i)は年、(2iは月)
+      year_month = "#{params["worked_on(1i)"]}/#{params["worked_on(2i)"]}" # 受け取ったworked_onの年と月を"年/月"という文字列にしてyear_monthに代入
+      @day = DateTime.parse(year_month) if year_month.present? # year_monthが存在した場合は、Datetimeを日付に変換する
+      # @attendancesに@user.attendancesからindicater_reply_editから承認されたモノと、worked_on:カラムが@dayのモノを全て取得する
+      @attendances = @user.attendances.where(indicater_reply_edit: "承認").where(worked_on: @day.all_month)
+    else
+      @attendances = @user.attendances.where(indicater_reply_edit: "承認").order("worked_on ASC")
+    end
   end
   
   
