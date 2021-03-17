@@ -142,7 +142,24 @@
         <td></td>
         <td colspan="5"><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="3">
-          <!--form_with実装予定-->
+          <%= form_with(model: @user, local: true) do |f| %>
+            <fieldset disabled>
+            <div class="form-group">
+              <% if @attendance.indicater_reply_month == "承認" %>
+                <%= f.label :indicater_check_month, "所属長承認　#{@attendance.indicater_check_month}から承認済み" %>
+              <% elsif @attendance.indicater_reply_month == "否認" %>
+                <%= f.label :indicater_check_month, "所属長否認　#{@attendance.indicater_check_month}から否認済み" %>
+              <% elsif @attendance.indicater_reply_month == "申請中" %>
+                <%= f.label :indicater_check_month, "所属長承認　#{@attendance.indicater_check_month}へ申請中" %>
+              <% else %>
+                <%= f.label :indicater_reply_month, "所属長承認　未" %>
+              <% end %>
+              <%= f.select :boss,{'上長A':1, '上長B':2}, {inculude_blank: ''}, {class: 'form-control input-sm', required: true} %>
+            </div>
+            <div class="form-group">
+              <%= f.submit "申請する", class: "btn btn-default disabled" %>
+            </div>
+          <% end %>
         </td>
       </tr>
     </tfoot>

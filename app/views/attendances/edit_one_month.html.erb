@@ -39,18 +39,18 @@
               <td><%= l(day.worked_on, format: :short) %></td>
               <td class="<%= css_class %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
               <% if Date.current < day.worked_on %>
-                <td><%= attendance.time_field :started_edit_at, disabled: true, class: "form-control" %></td>
-                <td><%= attendance.time_field :finished_edit_at, disabled: true, class: "form-control" %></td>
-                <td><%= attendance.check_box :tomorrow_edit, id: "tomorrow", disabled: true %></td>
+                <td><%= attendance.time_field :started_edit_at, disabled: "true", class: "form-control" %></td>
+                <td><%= attendance.time_field :finished_edit_at, disabled: "true", class: "form-control" %></td>
+                <td><%= attendance.check_box :tomorrow_edit, id: "tomorrow", disabled: "true" %></td>
                 <td>
                   <% if day.started_edit_at.present? && day.finished_edit_at.present? %>
                     <%= str_times = overtime_worked_on(day.finished_edit_at, day.started_edit_at, day.tomorrow_edit) %>
                     <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
                   <% end %>
                 </td>
-                <td><%= attendance.text_field :note, class: "form-control", placeholder: "変更理由を記載して下さい", disabled: true %></td>
+                <td><%= attendance.text_field :note, class: "form-control", placeholder: "変更理由を記載して下さい", disabled: "true" %></td>
                 <td>
-                  <%= attendance.collection_select(:indicater_check_edit, @superior, :name, :name, {include_blank: "上長を選択して下さい"}, {class: "form-control input-sm", disabled: true}) %>
+                  <%= attendance.collection_select(:indicater_check_edit, @superior, :name, :name, {include_blank: "上長を選択して下さい"}, {class: "form-control input-sm", disabled: "true"}) %>
                 </td>
               <% else %>
                 <td><%= attendance.time_field :started_edit_at, class: "form-control" %></td>

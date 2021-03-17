@@ -1,1 +1,40 @@
 <h1>勤怠ログ</h1>
+
+<p>
+  <%= form_with(url: log_user_attendance_path, local: true, method: :get) do |f| %>
+  <%= f.date_select :worked_on, {use_month_numbers: true, discard_day: true, prompt:["年","月"]}, {class: "form-control bootstrap-date-only-width"} %>
+  <%= f.submit "検索", class: "btn btn-lg btn-primary" %>
+  <% end %>
+</p>
+
+<div class="log-table">
+  <table class="table table-bordered table-condensed overtime-table">
+    <thead class="log">
+      <th>日付</th>
+      <th>変更前出社時間</th>
+      <th>変更前退社時間</th>
+      <th>変更後出社時間</th>
+      <th>変更後退社時間</th>
+      <th>指示者</th>
+      <th>承認日</th>
+    </thead>
+    <tbody class="line">
+      <% @attendances.each do |day| %>
+        <tr class="center">
+          <td><%= l(day.worked_on, format: :short) %></td>
+          <% if day.started_before_at.present? && day.finished_before_at.present? %>
+            <td><%= l(day.started_before_at, format: :time) %></td>
+            <td><%= l(day.finished_before_at, format: :time) %></td>
+          <% else %>
+            <td><%= l(day.started_at, format: :time) %></td>
+            <td><%= l(day.finished_at, format: :time) %></td>
+          <% end %>
+          <td><%= l(day.started_edit_at, format: :time) %></td>
+          <td><%= l(day.finished_edit_at, format: :time) %></td>
+          <td><%= day.indicater_check_edit %></td>
+          <td><%= l(day.updated_at, format: :md) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

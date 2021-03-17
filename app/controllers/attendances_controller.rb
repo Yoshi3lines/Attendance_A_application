@@ -2,7 +2,7 @@ class AttendancesController < ApplicationController
   before_action :set_user, only: [:edit_one_month, :update_one_month, :edit_overtime_notice, :edit_one_month_notice, :update_month_approval, :edit_month_approval_notice]
   before_action :logged_in_user, only: [:update, :edit_one_month]
   before_action :admin_user, only: [:index, :destroy, :edit_basic_info]
-  before_action :set_one_month, only: :edit_one_month
+  before_action :set_one_month, only: [:edit_one_month]
   before_action :admin_not
   before_action :correct_not, only: [:show, :edit_one_month]
   before_action :correct_user_a, only: [:log]
@@ -47,6 +47,7 @@ class AttendancesController < ApplicationController
     @attendances = Attendance.where.not(started_edit_at: nil, finished_edit_at: nil, note: nil, indicater_reply_edit: nil).order("worked_on ASC")
   end
   
+  # 勤怠変更処理
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始します。
       c1 = 0 # カラムを更新した件数を入れる変数を定義
@@ -171,7 +172,7 @@ class AttendancesController < ApplicationController
       @attendance.update_attributes(month_approval_params)
       flash[:success] = "勤怠承認申請を受け付けました"
     else
-      flash[:danger] = "上長を選択してください"
+      flash[:danger] = "上長を選択して下さい"
     end
     redirect_to user_url(@user)
   end
@@ -341,16 +342,5 @@ class AttendancesController < ApplicationController
     def month_approval_notice_params
       # attendancesテーブルの（承認月、指示者確認、変更、どの上長なのか？）
       params.require(:user).permit(attendances: [:month_approval, :indicater_reply_month, :change_month, :indicater_check_month])[:attendances]
-    end
-    
-    # beforeフィルター
-    
-    # 管理権限者、もしくは現在ログイン中のユーザーを許可します。
-    def admin_or_correct_user
-      @user = User.find(params[:user_id]) if @user.blank?
-      unless current_user?(@user) || current_user.admin?
-        flash[:danger] = "編集権限がありません。"
-        redirect_to(root_url)
-      end
     end
 end
