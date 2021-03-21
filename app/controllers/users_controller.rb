@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_action :correct_not, only: :show
   
   def index
-    @users = User.all
+    @users = User.where.not(id: 1)
   end
   
   def import
