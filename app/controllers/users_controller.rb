@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_action :correct_not, only: :show
   
   def index
-    @users = User.where.not(id: 1)
+    @users = User.where.not(admin: true)
       respond_to do |format|
       format.html do
       end
@@ -130,12 +130,12 @@ class UsersController < ApplicationController
     # ユーザー情報更新
     def user_params
       params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation,
-                                   :employee_number, :uid, :basic_time, :designated_work_start_time, :designated_work_end_time)
+                                   :employee_number, :uid, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
     
     # 基本情報更新
     def basic_info_params
-      params.require(:user).permit(:affiliation, :basic_time, :work_time)
+      params.require(:user).permit(:affiliation, :basic_work_time, :work_time)
     end
     
     
