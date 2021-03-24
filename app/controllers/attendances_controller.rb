@@ -39,6 +39,7 @@ class AttendancesController < ApplicationController
   def edit_one_month
     @attendance = Attendance.find(params[:id])
     @superior = User.where(superior: true).where.not( id: current_user.id)
+    # @indicater = @user.attendances.indicater_check_edit = nil # 上長の表示を戻すためのメソッド
   end
   
   # 勤怠変更申請お知らせモーダル
@@ -62,10 +63,10 @@ class AttendancesController < ApplicationController
               flash[:danger] = "退勤時間が存在しません"
               redirect_to attendances_edit_one_month_user_url(date: params[:date])
               return
-            elsif item[:started_edit_at].blank? && item[:finished_edit_at].blank? # どちらの時間も入力されていない場合はエラー
-              flash[:danger] = "時刻を入力して下さい"
-              redirect_to attendances_edit_one_month_user_url(date: params[:date])
-              return
+            # elsif item[:started_edit_at].blank? && item[:finished_edit_at].blank? # どちらの時間も入力されていない場合はエラー
+            #   flash[:danger] = "時刻を入力して下さい"
+            #   redirect_to attendances_edit_one_month_user_url(date: params[:date])
+            #   return
               # 翌日チェックがなくて、さらに出勤時間よりも退勤時間が小さい場合はエラー
             elsif item[:started_edit_at].present? && item[:finished_edit_at].present? && item[:tomorrow_edit] == "0" && item[:started_edit_at].to_s > item[:finished_edit_at].to_s
               flash[:danger] = "入力時刻に誤りがあります"
