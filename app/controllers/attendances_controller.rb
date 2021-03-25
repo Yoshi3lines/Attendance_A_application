@@ -39,12 +39,12 @@ class AttendancesController < ApplicationController
   def edit_one_month
     @attendance = Attendance.find(params[:id])
     @superior = User.where(superior: true).where.not( id: current_user.id)
-    # @indicater = @user.attendances.indicater_check_edit = nil # 上長の表示を戻すためのメソッド
   end
   
   # 勤怠変更申請お知らせモーダル
   def edit_one_month_notice
     @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_edit: "申請中"})
+    @indicater_edits = @users.where(attendances: {indicater_check_edit: current_user.name}) # 変更箇所：　上長の選択
     @attendances = Attendance.where.not(started_edit_at: nil, finished_edit_at: nil, note: nil, indicater_reply_edit: nil).order("worked_on ASC")
   end
   
@@ -63,10 +63,10 @@ class AttendancesController < ApplicationController
               flash[:danger] = "退勤時間が存在しません"
               redirect_to attendances_edit_one_month_user_url(date: params[:date])
               return
-            # elsif item[:started_edit_at].blank? && item[:finished_edit_at].blank? # どちらの時間も入力されていない場合はエラー
-            #   flash[:danger] = "時刻を入力して下さい"
-            #   redirect_to attendances_edit_one_month_user_url(date: params[:date])
-            #   return
+            elsif item[:started_edit_at].blank? && item[:finished_edit_at].blank? # どちらの時間も入力されていない場合はエラー
+              flash[:danger] = "時刻を入力して下さい"
+              redirect_to attendances_edit_one_month_user_url(date: params[:date])
+              return
               # 翌日チェックがなくて、さらに出勤時間よりも退勤時間が小さい場合はエラー
             elsif item[:started_edit_at].present? && item[:finished_edit_at].present? && item[:tomorrow_edit] == "0" && item[:started_edit_at].to_s > item[:finished_edit_at].to_s
               flash[:danger] = "入力時刻に誤りがあります"
@@ -181,6 +181,7 @@ class AttendancesController < ApplicationController
   # 1ヶ月分の勤怠承認モーダル
   def edit_month_approval_notice
       @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_month: "申請中"})
+      @indicater_approvals = @users.where(attendances: {indicater_check_month: current_user.name}) # 変更箇所：　上長の選択
       @attendances = Attendance.where.not(month_approval: nil, indicater_reply_month: nil).order("month_approval ASC")
   end
   
@@ -246,6 +247,7 @@ class AttendancesController < ApplicationController
   # 残業申請お知らせモーダル　
   def edit_overtime_notice
     @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply: "申請中"})
+    @indicater_checks = @users.where(attendances: {indicater_check: current_user.name}) # 変更箇所：　上長の選択
     @attendances = Attendance.where.not(overtime_finished_at: nil).order("worked_on ASC")
   end
   

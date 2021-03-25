@@ -7,7 +7,7 @@
     </div>
     <div class="modal-body">
       <%= form_with(model: @user, url: update_one_month_notice_user_attendance_path, method: :patch, local: true) do |f| %>
-        <% @users.each do |user| %>
+        <% @indicater_edits.each do |user| %>
           <h3 align="center" class="modal-title"><%= "【#{user.name}からの勤怠変更申請】" %></h3>
             <table class="table table-bordered table-condensed one-month-notice_table">
               <thead class="modal-notice">

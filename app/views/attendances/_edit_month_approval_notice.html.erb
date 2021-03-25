@@ -7,7 +7,7 @@
     </div>
     <div class="modal-body">
       <%= form_with(model: @user, url: update_month_approval_notice_user_attendance_path, method: :patch, local: true) do |f| %>
-        <% @users.each do |user| %>
+        <% @indicater_approvals.each do |user| %>
           <h3 align="center" class="modal-title"><%= "【#{user.name}からの1ヶ月分勤怠申請】" %></h3>
             <table class="table table-bordered table-condensed overtime-table">
               <thead class="modal-notice">
