@@ -134,9 +134,8 @@ class AttendancesController < ApplicationController
                 item[:finished_before_at] = attendance.finished_at
               end
               item[:finished_at] = attendance.finished_edit_at
-              
-              item[:indicater_check_edit] = attendance.indicater_check_edit
-              # item[:indicater_check_edit] = attendance.indicater_check_edit
+              item[:log_checked] = attendance.indicater_check_edit
+              item[:indicater_check_edit] = nil
               e2 += 1
               attendance.indicater_check_anser = "勤怠変更申請を承認しました"
             elsif item[:indicater_reply_edit] == "否認"
@@ -323,7 +322,7 @@ class AttendancesController < ApplicationController
     
     # 勤怠編集のお知らせモーダル
     def attendances_notice_params
-      params.require(:user).permit(attendances: [:started_at, :finished_at, :started_before_at, :finished_before_at, :started_edit_at, :finished_edit_at, :note, :indicater_reply_edit, :change_edit])[:attendances]
+      params.require(:user).permit(attendances: [:started_at, :finished_at, :started_before_at, :finished_before_at, :started_edit_at, :finished_edit_at, :note, :indicater_reply_edit, :change_edit, :log_checked])[:attendances]
     end
     
     # 残業申請モーダル情報
