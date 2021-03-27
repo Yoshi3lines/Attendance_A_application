@@ -135,7 +135,7 @@ class AttendancesController < ApplicationController
               end
               item[:finished_at] = attendance.finished_edit_at
               item[:log_checked] = attendance.indicater_check_edit
-              item[:indicater_check_edit] = nil
+              item[:indicater_check_edit] = attendance.indicater_check_edit
               e2 += 1
               attendance.indicater_check_anser = "勤怠変更申請を承認しました"
             elsif item[:indicater_reply_edit] == "否認"
