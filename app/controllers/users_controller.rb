@@ -57,6 +57,12 @@ class UsersController < ApplicationController
     @month = Attendance.where(indicater_reply_month: "申請中", indicater_check_month: @user.name).count
     @superior = User.where(superior: true).where.not(id: current_user.id)
     @attendance = @user.attendances.find_by(worked_on: @first_day)
+    @overtime_superior = Attendance.where(indicater_reply: "否認").count
+    # @overtime_superior = Attendance.where(indicater_reply: "否認", indicater_check: @user.name).count
+    @change_superior = Attendance.where(indicater_reply_edit: "否認").count
+    # @change_superior = Attendance.where(indicater_reply_edit: "否認", indicater_check_edit: @user.name).count
+    @month_superior = Attendance.where(indicater_reply_month: "否認").count
+    # @month_superior = Attendance.where(indicater_reply_month: "否認", indicater_check_month: @user.name).count
     # csv出力
     respond_to do |format|
       format.html

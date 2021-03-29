@@ -29,6 +29,7 @@
 <div class = "notice-group">
   <% if current_user.superior? %>
     
+    <p>--あなた宛ての申請--</p>
     <% if @month >= 1 %>
       <div class = "red">
         <p>
@@ -59,7 +60,27 @@
     <% else %>
       <p class = "notice">【残業申請のお知らせ】</p>
     <% end %>
-    
+    <div>
+      <p>--あなたの申請--</p>
+      
+      <% if @change >= 1 || @change_superior >= 1 %>
+        <p class="red-notice">【勤怠変更の申請】 未承認：<%= "#{@change}" %>件,　否認：<%= "#{@change_superior}" %>件</p>
+      <% else %>
+        <p>【勤怠変更の申請】 未承認：0件,　否認：0件</p>
+      <% end %>
+      
+      <% if @overtime >= 1 || @overtime_superior >= 1 %>
+        <p class="red-notice">【残業の申請】 未承認：<%= "#{@overtime}" %>件,　否認：<%= "#{@overtime_superior}" %>件</p>
+      <% else %>
+        <p>【残業の申請】 未承認：0件,　否認：0件</p>
+      <% end %>
+      
+      <% if @month >= 1 || @month_superior >= 1 %>
+        <p class="red-notice">【1ヶ月分の勤怠確認申請】 未承認：<%= "#{@month}" %>件,　否認：<%= "#{@month_superior}" %>件</p>
+      <% else %>
+        <p>【1ヶ月分の勤怠確認申請】 未承認：0件,　否認：0件</p>
+      <% end %>
+    </div>
   <% end %>
 </div>
 
@@ -152,8 +173,8 @@
             <td></td>
           <% end %>
           <td>
-            <% if day.indicater_check_edit.present? %>
-              <%= "#{day.indicater_check_edit}に勤怠変更#{day.indicater_reply_edit}" %>
+            <% if day.log_checked.present? %>
+              <%= "#{day.log_checked}に勤怠変更#{day.indicater_reply_edit}" %>
             <% elsif day.indicater_reply_edit == " 承認" %>
               <%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>
             <% elsif day.indicater_reply_edit == "否認" %>

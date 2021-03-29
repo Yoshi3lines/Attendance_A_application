@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   
   def admin_not
     if current_user.admin?
-      flash[:danger] = "ページ遷移の権限がありません。"
+      # flash[:danger] = "ページ遷移の権限がありません。"
       redirect_to root_url
     end
   end
