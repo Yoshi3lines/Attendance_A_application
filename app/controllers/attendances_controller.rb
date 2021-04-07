@@ -43,9 +43,10 @@ class AttendancesController < ApplicationController
   
   # 勤怠変更申請お知らせモーダル
   def edit_one_month_notice
-    @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_edit: "申請中"})
-    @indicater_edits = @users.where(attendances: {indicater_check_edit: current_user.name}) # 変更箇所：　上長の選択
-    @attendances = Attendance.where.not(started_edit_at: nil, finished_edit_at: nil, note: nil, indicater_reply_edit: nil).order("worked_on ASC")
+    @users = User.eager_load(:attendances).where(attendances: {indicater_reply_edit: "申請中", indicater_check_edit: current_user.name})
+    # @users = User.joins(:attendances).group("users.id").where(attendances: {indicater_reply_edit: "申請中"})
+    # @indicater_edits = @users.where(attendances: {indicater_check_edit: current_user.name}) # 変更箇所：　上長の選択
+    # @attendances = Attendance.where.not(started_edit_at: nil, finished_edit_at: nil, note: nil, indicater_reply_edit: nil).order("worked_on ASC")
   end
   
   # 勤怠変更処理
@@ -63,17 +64,9 @@ class AttendancesController < ApplicationController
               flash[:danger] = "退勤時間が存在しません"
               redirect_to attendances_edit_one_month_user_url(date: params[:date])
               return
-            # elsif item[:started_edit_at].blank? && item[:finished_edit_at].blank? # どちらの時間も入力されていない場合はエラー
-            #   flash[:danger] = "時刻を入力して下さい"
-            #   redirect_to attendances_edit_one_month_user_url(date: params[:date])
-            #   return
               # 翌日チェックがなくて、さらに出勤時間よりも退勤時間が小さい場合はエラー
             elsif item[:started_edit_at].present? && item[:finished_edit_at].present? && item[:tomorrow_edit] == "0" && item[:started_edit_at].to_s > item[:finished_edit_at].to_s
               flash[:danger] = "入力時刻に誤りがあります"
-              redirect_to attendances_edit_one_month_user_url(date: params[:date])
-              return
-            elsif item[:note].blank? # 備考が空の場合はエラー
-              flash[:danger] = "変更内容を入力して下さい"
               redirect_to attendances_edit_one_month_user_url(date: params[:date])
               return
             end

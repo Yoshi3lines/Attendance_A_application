@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'roo'
+gem 'pry-rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13' # heroku時、この行を追加

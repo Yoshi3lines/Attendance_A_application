@@ -60,28 +60,29 @@
     <% else %>
       <p class = "notice">【残業申請のお知らせ】</p>
     <% end %>
-    <div>
-      <p>--あなたの申請--</p>
-      
-      <% if @change >= 1 || @change_superior >= 1 %>
-        <p class="red-notice">【勤怠変更の申請】 未承認：<%= "#{@change}" %>件,　否認：<%= "#{@change_superior}" %>件</p>
-      <% else %>
-        <p>【勤怠変更の申請】 未承認：0件,　否認：0件</p>
-      <% end %>
-      
-      <% if @overtime >= 1 || @overtime_superior >= 1 %>
-        <p class="red-notice">【残業の申請】 未承認：<%= "#{@overtime}" %>件,　否認：<%= "#{@overtime_superior}" %>件</p>
-      <% else %>
-        <p>【残業の申請】 未承認：0件,　否認：0件</p>
-      <% end %>
-      
-      <% if @month >= 1 || @month_superior >= 1 %>
-        <p class="red-notice">【1ヶ月分の勤怠確認申請】 未承認：<%= "#{@month}" %>件,　否認：<%= "#{@month_superior}" %>件</p>
-      <% else %>
-        <p>【1ヶ月分の勤怠確認申請】 未承認：0件,　否認：0件</p>
-      <% end %>
-    </div>
   <% end %>
+  
+  <div>
+    <p>--あなたの申請--</p>
+    
+    <% if @change >= 1 || @change_superior >= 1 %>
+      <p class="red-notice">【勤怠変更の申請】 未承認：<%= "#{@change}" %>件,　否認：<%= "#{@change_superior}" %>件</p>
+    <% else %>
+      <p>【勤怠変更の申請】 未承認：0件,　否認：0件</p>
+    <% end %>
+    
+    <% if @overtime >= 1 || @overtime_superior >= 1 %>
+      <p class="red-notice">【残業の申請】 未承認：<%= "#{@overtime}" %>件,　否認：<%= "#{@overtime_superior}" %>件</p>
+    <% else %>
+      <p>【残業の申請】 未承認：0件,　否認：0件</p>
+    <% end %>
+    
+    <% if @month >= 1 || @month_superior >= 1 %>
+      <p class="red-notice">【1ヶ月分の勤怠確認申請】 未承認：<%= "#{@month}" %>件,　否認：<%= "#{@month_superior}" %>件</p>
+    <% else %>
+      <p>【1ヶ月分の勤怠確認申請】 未承認：0件,　否認：0件</p>
+    <% end %>
+  </div>
 </div>
 
 <div class="btn-users-show">
