@@ -29,8 +29,8 @@
             <td></td>
             <td></td>
           <% end %>
-          <td><%= l(day.started_edit_at, format: :time) %></td>
-          <td><%= l(day.finished_edit_at, format: :time) %></td>
+          <td><%= l(day.started_edit_at, format: :time) if day.started_edit_at %></td>
+          <td><%= l(day.finished_edit_at, format: :time) if day.finished_edit_at %></td>
           <td><%= day.log_checked %></td>
           <td><%= l(day.updated_at, format: :md) %></td>
         </tr>
