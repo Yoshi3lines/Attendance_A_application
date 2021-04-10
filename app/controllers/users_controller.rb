@@ -57,12 +57,15 @@ class UsersController < ApplicationController
     @month = Attendance.where(indicater_reply_month: "申請中", indicater_check_month: @user.name).count
     @superior = User.where(superior: true).where.not(id: current_user.id)
     @attendance = @user.attendances.find_by(worked_on: @first_day)
-    @overtime_superior = Attendance.where(indicater_reply: "否認").count
-    # @overtime_superior = Attendance.where(indicater_reply: "否認", indicater_check: @user.name).count
-    @change_superior = Attendance.where(indicater_reply_edit: "否認").count
-    # @change_superior = Attendance.where(indicater_reply_edit: "否認", indicater_check_edit: @user.name).count
-    @month_superior = Attendance.where(indicater_reply_month: "否認").count
-    # @month_superior = Attendance.where(indicater_reply_month: "否認", indicater_check_month: @user.name).count
+    # 残業のカウント
+    @overtime_count = current_user.attendances.where(indicater_reply: "申請中").count
+    @overtime_not_count = current_user.attendances.where(indicater_reply: "否認").count
+    # 勤怠変更のカウント
+    @change_count = current_user.attendances.where(indicater_reply_edit: "申請中").count
+    @change_not_count = current_user.attendances.where(indicater_reply_edit: "否認").count
+    # 1ヶ月勤怠申請のカウント
+    @month_count = current_user.attendances.where(indicater_reply_month: "申請中").count
+    @month_not_count = current_user.attendances.where(indicater_reply_month: "否認").count
     # csv出力
     respond_to do |format|
       format.html

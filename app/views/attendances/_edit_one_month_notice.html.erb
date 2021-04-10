@@ -41,8 +41,7 @@
                   <th>時</th>
                   <th>分</th>
                 </tr>
-              </thead
-              <%byebug%>
+              </thead>
               <% user.attendances.each do |day| %>
                 <%= f.fields_for "attendances[]", day do |d| %>
                   <!--<%# if day.user_id == user.id && day.indicater_reply_edit == "申請中" && current_user.name == day.indicater_check_edit %>-->
@@ -63,15 +62,15 @@
                         <td></td>
                         <td></td>
                       <% else %>
-                        <td><%= l(day.started_before_at, format: :hour_only) %></td>
-                        <td><%= l(day.started_before_at, format: :minutes_only) %></td>
-                        <td><%= l(day.finished_before_at, format: :hour_only) %></td>
-                        <td><%= l(day.finished_before_at, format: :minutes_only) %></td>
+                        <td><%= l(day.started_before_at, format: :hour_only) if day.started_before_at %></td>
+                        <td><%= l(day.started_before_at, format: :minutes_only) if day.started_before_at %></td>
+                        <td><%= l(day.finished_before_at, format: :hour_only) if day.finished_before_at %></td>
+                        <td><%= l(day.finished_before_at, format: :minutes_only) if day.finished_before_at %></td>
                       <% end %>
-                      <td><%= l(day.started_edit_at, format: :hour_only) %></td>
-                      <td><%= l(day.started_edit_at, format: :minutes_only) %></td>
-                      <td><%= l(day.finished_edit_at, format: :hour_only) %></td>
-                      <td><%= l(day.finished_edit_at, format: :minutes_only) %></td>
+                      <td><%= l(day.started_edit_at, format: :hour_only) if day.started_edit_at %></td>
+                      <td><%= l(day.started_edit_at, format: :minutes_only) if day.started_edit_at %></td>
+                      <td><%= l(day.finished_edit_at, format: :hour_only) if day.finished_edit_at %></td>
+                      <td><%= l(day.finished_edit_at, format: :minutes_only) if day.finished_edit_at %></td>
                       <td><%= day.note %></td>
                       <td><%= d.select :indicater_reply_edit, Attendance.indicater_reply_edits.keys,{prompt: "選択して下さい"}, {class: "form-control input-sm" , required: true} %></td>
                       <td><%= d.check_box :change_edit %></td>
