@@ -62,6 +62,7 @@
                         <td></td>
                         <td></td>
                       <% else %>
+                      <!--ここからの下のif文をつけることによってnilで勤怠変更の申請が来てもエラーが起きない-->
                         <td><%= l(day.started_before_at, format: :hour_only) if day.started_before_at %></td>
                         <td><%= l(day.started_before_at, format: :minutes_only) if day.started_before_at %></td>
                         <td><%= l(day.finished_before_at, format: :hour_only) if day.finished_before_at %></td>

@@ -3,7 +3,7 @@
   <h1>勤怠システム</h1>
   
   <% if logged_in? %>
-    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary #{"disabled" unless current_user.admin?}" %>
+    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary disabled" %>
     <p>すでにログイン済みです</p>
   <% else %>
     <%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %>

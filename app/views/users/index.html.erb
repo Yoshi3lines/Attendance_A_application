@@ -5,17 +5,14 @@
 
 <div class="col-md-10 col-md-offset-1">
   <table class="table table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <div class="csv">
-          <%= form_tag import_users_path, multipart: true do %>
-            <%= file_field_tag :file %>
-            <p></p>
-            <%= submit_tag "インポート", class: "btn btn-primary" %>
-          <% end %>
-        </div>
-      </tr>
-    </thead>
+    
+  <div class="csv">
+    <%= form_tag import_users_path, multipart: true do |f| %>
+      <%= file_field_tag :file %>
+      <p></p>
+      <%= submit_tag "インポート", class: "btn btn-primary" %>
+    <% end %>
+  </div>
     
     <% @users.each do |user| %>
       <tr>

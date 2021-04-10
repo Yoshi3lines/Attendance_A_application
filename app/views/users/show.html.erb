@@ -174,9 +174,9 @@
             <td></td>
           <% end %>
           <td>
-            <% if day.log_checked.present? %>
-              <%= "#{day.log_checked}に勤怠変更#{day.indicater_reply_edit}" %>
-            <% elsif day.indicater_reply_edit == " 承認" %>
+            <% if day.indicater_check_edit.present? %>
+              <%= "#{day.indicater_check_edit}に勤怠変更#{day.indicater_reply_edit}" %>
+            <% elsif day.indicater_reply_edit == "承認" %>
               <%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>
             <% elsif day.indicater_reply_edit == "否認" %>
               <%= "勤怠変更申請が#{day.indicater_reply_edit}されました" %>
