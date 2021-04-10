@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_action :correct_not, only: :show
   
   def index
-    @users = User.where.not(admin: true)
+    @users = User.where.not(id: 1)
       respond_to do |format|
       format.html do
       end
