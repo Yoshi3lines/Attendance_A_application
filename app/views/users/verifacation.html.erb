@@ -85,11 +85,15 @@
           <td><%= l(day.finished_at, format: :minutes_only) if day.finished_at.present? %></td>
           <td></td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
-              <!--@total_working_timesを累計在社時間に使用するため、str_timesに代入処理-->
-              <%= str_times = working_times(day.started_at, day.finished_at) %>
+            <% if day.started_edit_at.present? && day.finished_edit_at.present? %>
+              <%= str_times = overtime_worked_on(day.finished_edit_at, day.started_edit_at, day.tomorrow_edit) %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
+            <!--<#% if day.started_at.present? && day.finished_at.present? %>-->
+              <!--@total_working_timesを累計在社時間に使用するため、str_timesに代入処理-->
+            <!--  <#%= str_times = working_times(day.started_at, day.finished_at) %>-->
+            <!--  <#% @total_working_times = @total_working_times.to_f + str_times.to_f %>-->
+            <!--<#% end %>-->
           </td>
           <td><%= day.note %></td>
           <td><%= l(day.overtime_finished_at, format: :hour_only) if day.overtime_finished_at.present? %></td>
