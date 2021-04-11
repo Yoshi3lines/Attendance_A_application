@@ -10,5 +10,5 @@
   <%= f.label :information, class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :information, :placeholder => "出勤または退勤を入力してください。", class: "form-control" %>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+  <%= f.submit yield(:button_edit_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
 <% end %>

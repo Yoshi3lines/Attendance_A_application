@@ -150,6 +150,7 @@
           <td><%= l(day.finished_at, format: :hour_only) if day.finished_at.present? %></td>
           <td><%= l(day.finished_at, format: :minutes_only) if day.finished_at.present? %></td>
           <td></td>
+          <!--在所時間の部分-->
           <td>
             <% if day.started_at.present? && day.finished_at.present? %>
               <!--@total_working_timesを累計在社時間に使用するため、str_timesに代入処理-->

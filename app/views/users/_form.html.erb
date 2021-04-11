@@ -14,7 +14,7 @@
   <%= f.number_field :employee_number, class: "form-control" %>
   
   <%= f.label :uid, class: "label-#{yield(:class_text)}" %>
-  <%= f.number_field :uid, class: "form-control" %>
+  <%= f.text_field :uid, class: "form-control" %>
   
   <%= f.label :password, class: "label-#{yield(:class_text)}" %>
   <%= f.password_field :password, class: "form-control" %>
@@ -28,7 +28,7 @@
   <%= f.label :designated_work_start_time, class: "label-#{yield(:class_text)}" %>
   <%= f.time_field :designated_work_start_time, class: "form-control" %>
   
-  <%= f.label :designated_work_start_time, class: "label-#{yield(:class_text)}" %>
+  <%= f.label :designated_work_end_time, class: "label-#{yield(:class_text)}" %>
   <%= f.time_field :designated_work_end_time, class: "form-control" %>
   
   <%= f.submit yield(:button_text), class: "btn btn-block btn-primary btn-#{yield(:class_text)}" %>

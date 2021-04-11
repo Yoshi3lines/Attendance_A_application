@@ -8,7 +8,7 @@
     <thead>
       <tr>
         <div class="csv">
-          <%= form_tag import_users_path, multipart: true do %>
+          <%= form_tag import_users_path, data: {"turbolinks" => false}, multipart: true do %>
             <%= file_field_tag :file %>
             <p></p>
             <%= submit_tag "インポート", class: "btn btn-primary" %>
