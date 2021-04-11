@@ -152,9 +152,13 @@
           <td></td>
           <!--在所時間の部分-->
           <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
+            <!--<#% if day.started_at.present? && day.finished_at.present? %>-->
               <!--@total_working_timesを累計在社時間に使用するため、str_timesに代入処理-->
-              <%= str_times = working_times(day.started_at, day.finished_at) %>
+            <!--  <#%= str_times = working_times(day.started_at, day.finished_at) %>-->
+            <!--  <#% @total_working_times = @total_working_times.to_f + str_times.to_f %>-->
+            <!--<#% end %>-->
+            <% if day.started_edit_at.present? && day.finished_edit_at.present? %>
+              <%= str_times = overtime_worked_on(day.finished_edit_at, day.started_edit_at, day.tomorrow_edit) %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
