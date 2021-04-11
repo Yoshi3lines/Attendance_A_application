@@ -5,18 +5,15 @@
 
 <div class="col-md-10 col-md-offset-1">
   <table class="table table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <div class="csv">
-          <%= form_tag import_users_path, data: {"turbolinks" => false}, multipart: true do %>
-            <%= file_field_tag :file %>
-            <p></p>
-            <%= submit_tag "インポート", class: "btn btn-primary" %>
-          <% end %>
-        </div>
-      </tr>
-    </thead>
-    
+    <tr>
+      <%= form_tag import_users_path, data: {"turbolinks" => false}, multipart: true do %>
+        <%= file_field_tag :file %>
+        <p></p>
+        <%= submit_tag "インポート", class: "btn btn-primary" %>
+      <% end %>
+    </tr>
+
+
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.name, user %></td>

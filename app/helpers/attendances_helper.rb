@@ -15,12 +15,6 @@ module AttendancesHelper
     format("%.2f", (((finish - start) / 60) / 60.0))
   end
   
-  def working_edit_times(start, finish)
-    if tomorrow_edit == true
-      format("%.2f", (((finish - start) / 60) / 60.0) + 24)
-    end
-  end
-  
   # 時間外勤務
   def overtime_worked_on(finish, end_time, tomorrow)
     if tomorrow == true
